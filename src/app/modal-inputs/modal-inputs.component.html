@@ -1,0 +1,18 @@
+<div class="modal modal__add-article">
+  <div class="modal__cover"></div>
+  <div class="modal__content position-center">
+    <button class="modal__close button-close modal__button-close" (click)="onClose.emit()">
+      <span class="close-icon"></span>
+    </button>
+    <h2 class="modal__title">Создать пост</h2>
+    <div class="form modal__form" >
+      <textarea class="textarea mb-20" name="title" cols="10" rows="2" placeholder="Заглавие" [(ngModel)]="title"></textarea>
+      <textarea class="textarea mb-20" name="description" cols="30" rows="5" placeholder="Содержание"
+                [(ngModel)]="description"></textarea>
+      <button class="button-lg button_blue modal__save"
+              (click)="emmitValue()"
+      >Сохранить
+      </button>
+    </div>
+  </div>
+</div>

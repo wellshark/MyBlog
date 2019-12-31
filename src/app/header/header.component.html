@@ -1,0 +1,10 @@
+<header class="header container">
+  <a class="logo" routerLink="/posts">My blog</a>
+  <div *ngIf="settings.controlButtons" class="header__buttons-wrap">
+    <button *ngIf="settings.isAdmin" class="button-sm button_green header__show-modal"
+            (click)=onAdd.emit()>
+      Добавить новость
+    </button>
+    <button class="button-sm button_danger">Выйти</button>
+  </div>
+</header>
