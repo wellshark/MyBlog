@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
-import {Post} from '../post.mode';
+import {Post} from '../post.model';
 import {PostService} from '../post.service';
 
 @Component({
@@ -9,6 +9,8 @@ import {PostService} from '../post.service';
 })
 export class PostListComponent implements OnInit {
   posts: Post[];
+  title = '';
+  desc = '';
   private date: Date;
   headerSettings = {
     controlButtons: true,
@@ -16,7 +18,8 @@ export class PostListComponent implements OnInit {
   };
   isModalShow = false;
 
-  constructor(private postService: PostService) {
+  constructor(private postService: PostService,
+  ) {
     this.date = new Date();
   }
 
@@ -31,8 +34,7 @@ export class PostListComponent implements OnInit {
           }
         );
       }
-    )
-    ;
+    );
   }
 
   create(postFields): void {
@@ -42,15 +44,9 @@ export class PostListComponent implements OnInit {
       description: postFields.description
     });
   }
-
-  toggleModalAppearance() {
-    this.isModalShow = !this.isModalShow;
+  stopRouting(event: Event) {
+    event.stopPropagation();
   }
-
-  update(post: Post) {
-    this.postService.updatePost(post);
-  }
-
   delete(id: string) {
     this.postService.deletePost(id);
   }

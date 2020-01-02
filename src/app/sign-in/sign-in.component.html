@@ -1,0 +1,17 @@
+<app-header [settings]="{
+    controlButtons: false,
+    isAdmin: false
+  }"></app-header>
+<div class="error-messages">
+
+  Неверный  логин или пароль!
+
+</div>
+<main class="sign-in position-center">
+  <form class="form sign-in__form">
+    <h2 class="sign-in__title mb-20">Please sign in</h2>
+    <input type="email" placeholder="Email address" class="input mb-10">
+    <input type="password" placeholder="Password" class="input mb-20" maxlength="8">
+    <button class="button-lg button_blue"> Sign in</button>
+  </form>
+</main>

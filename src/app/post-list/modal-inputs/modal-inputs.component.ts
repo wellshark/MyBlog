@@ -8,10 +8,10 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 export class ModalInputsComponent implements OnInit {
   @Input() title;
   @Input() description;
-  @Output() onClose = new EventEmitter();
+  @Input() isModalShow;
   @Output() onSave: EventEmitter<object> = new EventEmitter<object>();
+  @Output() onClose = new EventEmitter();
 
-  // isModalClose;
   constructor() {
   }
 
@@ -24,6 +24,9 @@ export class ModalInputsComponent implements OnInit {
         title: this.title,
         description: this.description
       });
+      this.title = '';
+      this.description = '';
     }
+
   }
 }

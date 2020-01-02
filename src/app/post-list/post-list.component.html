@@ -1,38 +1,18 @@
-<app-header [settings]="headerSettings" (onAdd)="toggleModalAppearance()"></app-header>
+<app-header [settings]="headerSettings" (onAdd)="isModalShow = !isModalShow"></app-header>
 
 <main class="posts">
-  <div class="post" *ngFor="let post of posts"  routerLink="/detail/{{post.id}}">
+  <div class="post" *ngFor="let post of posts" routerLink="/detail/{{post.id}}">
     <h3 class="post__title">{{post.title}}</h3>
     <p class="post__description">{{post.description}}</p>
+    <div class="post__control-buttons">
+      <img src="../../assets/img/delete.png" width="24" height="24" (click)="stopRouting($event); delete(post.id)">
+    </div>
   </div>
 </main>
 <app-modal-inputs
-  *ngIf="isModalShow"
-  [title]="''"
-  [description] = "''"
-  (onClose)="isModalShow = !isModalShow"
-  (onSave)="create($event); toggleModalAppearance()"
+  [title]=title
+  [description]=desc
+  [isModalShow]=isModalShow
+  (onSave)="create($event);"
+  (onClose)="isModalShow=!isModalShow;"
 ></app-modal-inputs>
-<!--<div class="modal modal__add-article" *ngIf="isModalShow">-->
-<!--  <div class="modal__cover"></div>-->
-<!--  <div class="modal__content position-center">-->
-<!--    <button class="modal__close button-close modal__button-close" (click)="isModalShow=!isModalShow">-->
-<!--      <span class="close-icon"></span>-->
-<!--    </button>-->
-<!--    <h2 class="modal__title">Создать пост</h2>-->
-<!--    <div class="form modal__form" >-->
-<!--      <textarea class="textarea mb-20" name="title" cols="10" rows="2" placeholder="Заглавие" #title></textarea>-->
-<!--      <textarea class="textarea mb-20" name="description" cols="30" rows="5" placeholder="Содержание"-->
-<!--                #description></textarea>-->
-<!--      <button class="button-lg button_blue modal__save"-->
-<!--              (click)="create({-->
-<!--                id: getUniqueId(),-->
-<!--                creationDate: 'new Date()',-->
-<!--                title: title.value,-->
-<!--                description: description.value-->
-<!--              }); isModalShow =!isModalShow"-->
-<!--      >Сохранить-->
-<!--      </button>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
