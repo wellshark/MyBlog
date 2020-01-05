@@ -202,8 +202,9 @@ a {
 }
 
 .error-messages {
+  //z-index: -1;
   position: absolute;
-  top: 10px;
+  top: 60px;
   right: 10px;
   width: 100%;
   margin-left: 10px;
@@ -214,7 +215,7 @@ a {
   border: 1px solid #f5c6cb;
   background-color: #f8d7da;
   color: #721c24;
-  opacity: 0;
+  //opacity: 0;
   transition: opacity 0.4s linear;
 }
 .input-wrap {

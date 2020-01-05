@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChild} from '@angular/core';
+
 
 @Component({
   selector: 'app-modal-inputs',
@@ -11,11 +12,15 @@ export class ModalInputsComponent implements OnInit {
   @Input() isModalShow;
   @Output() onSave: EventEmitter<object> = new EventEmitter<object>();
   @Output() onClose = new EventEmitter();
+  isEraseInputs = true;
 
   constructor() {
   }
 
   ngOnInit() {
+    if (this.title && this.description) {
+      this.isEraseInputs = false;
+    }
   }
 
   emmitValue() {
@@ -24,8 +29,11 @@ export class ModalInputsComponent implements OnInit {
         title: this.title,
         description: this.description
       });
-      this.title = '';
-      this.description = '';
+      if (this.isEraseInputs) {
+        this.title = '';
+        this.description = '';
+      }
+
     }
 
   }

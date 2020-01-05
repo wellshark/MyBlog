@@ -11,9 +11,10 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {HeaderComponent} from './header/header.component';
 import {PostDetailComponent} from './post-list/post-detail/post-detail.component';
 import {ModalInputsComponent} from './post-list/modal-inputs/modal-inputs.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -24,13 +25,15 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     ModalInputsComponent,
     SignInComponent,
     SignUpComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     AngularFirestore,

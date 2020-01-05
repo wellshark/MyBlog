@@ -2,6 +2,7 @@ import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core'
 import {ActivatedRoute} from '@angular/router';
 import {PostService} from '../../post.service';
 import {Post} from '../../post.model';
+import {AuthService} from '../../auth.service';
 
 @Component({
   selector: 'app-post-detail',
@@ -15,7 +16,8 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
 
   constructor(
     private route: ActivatedRoute,
-    private postService: PostService
+    private postService: PostService,
+    private auth: AuthService
   ) {
   }
 

@@ -1,6 +1,9 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
 import {Post} from '../post.model';
 import {PostService} from '../post.service';
+import Utils from '../utils';
+import {ActivatedRoute} from '@angular/router';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-post-list',
@@ -13,12 +16,13 @@ export class PostListComponent implements OnInit {
   desc = '';
   private date: Date;
   headerSettings = {
-    controlButtons: true,
+    isPost: true,
     isAdmin: true
   };
   isModalShow = false;
 
   constructor(private postService: PostService,
+              private auth: AuthService
   ) {
     this.date = new Date();
   }
@@ -39,7 +43,7 @@ export class PostListComponent implements OnInit {
 
   create(postFields): void {
     this.postService.createPost({
-      id: this.getUniqueId(),
+      id: Utils.getUniqueId(),
       title: postFields.title,
       description: postFields.description
     });
@@ -51,7 +55,5 @@ export class PostListComponent implements OnInit {
     this.postService.deletePost(id);
   }
 
-  getUniqueId() {
-    return `f${(+new Date()).toString(16)}`;
-  }
+
 }

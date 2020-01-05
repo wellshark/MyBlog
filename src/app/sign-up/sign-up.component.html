@@ -3,26 +3,46 @@
     isAdmin: false
   }"></app-header>
 
-<div class="error-messages">
+<div class="error-messages"
+     *ngIf="form.get('name').invalid && form.get('name').touched
+     ||form.get('surname').invalid && form.get('surname').touched
+||form.get('email').invalid && form.get('email').touched
+|| passwordContainer.invalid && passwordContainer.get('password').touched
+  && passwordContainer.get('confirmPass').touched  && passwordContainer.get('password').valid
+  ||passwordContainer.get('password').invalid && passwordContainer.get('password').touched
+">
+  <p *ngIf="form.get('name').invalid && form.get('name').touched">Enter a valid name!</p>
+  <p *ngIf="form.get('surname').invalid && form.get('surname').touched">Enter a valid surname!</p>
+  <p *ngIf="form.get('email').invalid && form.get('email').touched">Enter a valid email!</p>
+  <p *ngIf="passwordContainer.get('password').invalid && passwordContainer.get('password').touched">
+    Enter a valid password!</p>
 
-  Неверный логин или пароль!
+  <p *ngIf="passwordContainer.invalid && passwordContainer.get('password').touched
+  && passwordContainer.get('confirmPass').touched && passwordContainer.get('password').valid">
+    Password fields are no the same!
+  </p>
 
 </div>
 <main class="sign-up position-center">
-  <form class="form sign-up__form">
-    <h2 class="mb-20">Please sign up</h2>
+  <h2 class="mb-20">Please sign up</h2>
+  <form class="form sign-up__form" [formGroup]="form" (ngSubmit)="create()">
     <div class="input-wrap">
-      <input type="text" placeholder="Name" class="input sign-up__input-sm mb-10 sign-up__input-mr">
-      <input type="text" placeholder="Surname" class="input sign-up__input-sm mb-10">
+      <input type="text" placeholder="Name" class="input sign-up__input-sm mb-10 sign-up__input-mr"
+             formControlName="name">
+      <input type="text" placeholder="Surname" class="input sign-up__input-sm mb-10" formControlName="surname">
     </div>
 
-    <input type="email" placeholder="Email address" class="input sign-up__input-lg mb-10">
-    <div class="input-wrap mb-10">
+    <input type="email" placeholder="Email address" class="input sign-up__input-lg mb-10" formControlName="email">
+    <div class="input-wrap mb-10" [formGroup]="passwordContainer">
 
-      <input type="password" placeholder="Password" class="input sign-up__input-sm mb-10 mr-15" maxlength="8">
-      <input type="password" placeholder="Confirm" class="input sign-up__input-sm mb-10" maxlength="8">
+      <input type="password" placeholder="Password" class="input sign-up__input-sm mb-10 sign-up__input-mr"
+             formControlName="password">
+      <input type="password" placeholder="Confirm" class="input sign-up__input-sm mb-10"
+             formControlName="confirmPass">
     </div>
 
-    <button class="button-lg button_blue"> Sign up</button>
+    <button class="button-lg" [class.button_blue]="form.valid && passwordContainer.valid" [class.button_gray]="form.invalid && passwordContainer.invalid"
+            [disabled]="form.invalid && passwordContainer.invalid"> Sign up
+    </button>
   </form>
 </main>

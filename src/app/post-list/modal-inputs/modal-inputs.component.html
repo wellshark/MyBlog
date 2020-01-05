@@ -1,6 +1,6 @@
-<div class="modal" *ngIf="isModalShow">
-  <div class="modal__cover"></div>
-  <div class="modal__content position-center">
+<div class="modal" *ngIf="isModalShow" >
+  <div class="modal__cover" (click)="onClose.emit()"></div>
+  <div class="modal__content position-center" >
     <button class="modal__close button-close modal__button-close" (click)="onClose.emit()">
       <span class="close-icon"></span>
     </button>

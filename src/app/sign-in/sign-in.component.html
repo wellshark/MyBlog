@@ -1,17 +1,20 @@
 <app-header [settings]="{
-    controlButtons: false,
-    isAdmin: false
+    isPost: false,
+    isAdmin: false,
+    isSignUpLink: true
   }"></app-header>
 <div class="error-messages">
 
-  Неверный  логин или пароль!
+  Неверный логин или пароль!
 
 </div>
 <main class="sign-in position-center">
-  <form class="form sign-in__form">
-    <h2 class="sign-in__title mb-20">Please sign in</h2>
-    <input type="email" placeholder="Email address" class="input mb-10">
-    <input type="password" placeholder="Password" class="input mb-20" maxlength="8">
-    <button class="button-lg button_blue"> Sign in</button>
+  <h2 class="sign-in__title mb-20">Please sign in</h2>
+  <form class="form sign-in__form" [formGroup]="form" (ngSubmit)="check()">
+    <input type="email" placeholder="Email address" class="input mb-10" formControlName="email">
+    <input type="password" placeholder="Password" class="input mb-20" formControlName="password">
+    <button class="button-lg" [class.button_blue]="form.valid" [class.button_gray]="form.invalid"
+            [disabled]="form.invalid"> Sign in
+    </button>
   </form>
 </main>
