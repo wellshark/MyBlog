@@ -6,7 +6,7 @@ import {User} from './user.model';
 })
 export class AuthService {
 
-  user = {};
+  user = {isAdmin: true};
 
   constructor() {
   }
@@ -16,6 +16,6 @@ export class AuthService {
   }
 
   signOut() {
-    this.user = {};
+    // this.user = {};
   }
 }

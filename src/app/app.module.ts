@@ -16,6 +16,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import {AuthGuardService} from './auth-guard.service';
+import {HeaderService} from './header.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import {AuthGuardService} from './auth-guard.service';
   ],
   providers: [
     AngularFirestore,
-    AuthGuardService
+    AuthGuardService,
+    HeaderService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,9 +1,11 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, ViewChild} from '@angular/core';
 import {Post} from '../post.model';
 import {PostService} from '../post.service';
 import Utils from '../utils';
 import {ActivatedRoute} from '@angular/router';
 import {AuthService} from '../auth.service';
+import {ModalInputsComponent} from './modal-inputs/modal-inputs.component';
+import {HeaderService} from '../header.service';
 
 @Component({
   selector: 'app-post-list',
@@ -22,9 +24,11 @@ export class PostListComponent implements OnInit {
   isModalShow = false;
 
   constructor(private postService: PostService,
-              private auth: AuthService
+              private auth: AuthService,
+              private share: HeaderService
   ) {
     this.date = new Date();
+    this.share.onClick.subscribe(() => this.isModalShow = !this.isModalShow);
   }
 
   ngOnInit() {
@@ -48,9 +52,11 @@ export class PostListComponent implements OnInit {
       description: postFields.description
     });
   }
+
   stopRouting(event: Event) {
     event.stopPropagation();
   }
+
   delete(id: string) {
     this.postService.deletePost(id);
   }

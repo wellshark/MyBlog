@@ -1,11 +1,11 @@
 <header class="header container">
   <a class="logo" routerLink="/posts">My blog</a>
   <div class="header__buttons-wrap">
-    <button *ngIf="auth.user.isAdmin" class="button-sm button_green header__show-modal"
-            (click)=onAdd.emit()>
+    <button *ngIf="settings.isAdmin" class="button-sm button_green header__show-modal"
+            (click)=share.doClick();>
       Добавить новость
     </button>
-    <button class="button-sm button_danger" *ngIf="settings.isPost"  routerLink="/signin" (click)="auth.signOut()">Выйти</button>
+    <button class="button-sm button_danger" *ngIf="settings.isExit"  routerLink="/signin" (click)="auth.signOut()">Выйти</button>
     <button class="button-sm button_green" *ngIf="settings.isSignUpLink" routerLink="/signup">Sign Up</button>
     <button class="button-sm button_green" *ngIf="settings.isSignInLink" routerLink="/signin">Sign In</button>
   </div>
