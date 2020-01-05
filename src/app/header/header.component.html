@@ -7,5 +7,6 @@
     </button>
     <button class="button-sm button_danger" *ngIf="settings.isPost"  routerLink="/signin" (click)="auth.signOut()">Выйти</button>
     <button class="button-sm button_green" *ngIf="settings.isSignUpLink" routerLink="/signup">Sign Up</button>
+    <button class="button-sm button_green" *ngIf="settings.isSignInLink" routerLink="/signin">Sign In</button>
   </div>
 </header>

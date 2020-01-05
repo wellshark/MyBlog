@@ -16,7 +16,6 @@ export class UserService {
   }
 
   createUser(user: User) {
-    console.log(user);
     return this.firestore.collection('users').doc(user.id).set(user);
   }
 }

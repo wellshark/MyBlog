@@ -15,6 +15,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import {AuthGuardService} from './auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
   ],
   providers: [
     AngularFirestore,
-    ModalInputsComponent
+    AuthGuardService
   ],
   bootstrap: [AppComponent]
 })

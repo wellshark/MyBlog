@@ -9,7 +9,7 @@ import {AuthService} from '../../auth.service';
   templateUrl: './post-detail.component.html',
   styleUrls: ['./post-detail.component.scss']
 })
-export class PostDetailComponent implements OnInit, AfterViewInit {
+export class PostDetailComponent implements OnInit {
 
   post;
   isModalShow;
@@ -23,9 +23,6 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getPost();
-  }
-  ngAfterViewInit(): void {
-    console.log(this.post);
   }
 
   getPost(): void {

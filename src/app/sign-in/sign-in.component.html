@@ -3,10 +3,16 @@
     isAdmin: false,
     isSignUpLink: true
   }"></app-header>
-<div class="error-messages">
-
-  Неверный логин или пароль!
-
+<div class="error-messages" *ngIf="form.get('email').invalid && form.get('email').touched
+||form.get('password').invalid && form.get('password').touched || isWrongFormData">
+  <p *ngIf="form.get('email').touched && form.get('email').invalid && form.get('email').errors.required">Email is not be empty!</p>
+  <p *ngIf="form.get('email').touched && form.get('email').invalid && form.get('email').errors.email">Enter a valid email!</p>
+  <p *ngIf="form.get('password').touched && form.get('password').invalid && form.get('password').errors.required">Password is not be empty!</p>
+  <p *ngIf="form.get('password').touched && form.get('password').invalid && form.get('password').errors.minlength">
+    The length must be at least {{ form.get('password').errors.minlength.requiredLength }}. Current Length
+    - {{ form.get('password').errors.minlength.actualLength }}
+  </p>
+  <p *ngIf="isWrongFormData">Wrong login or password!</p>
 </div>
 <main class="sign-in position-center">
   <h2 class="sign-in__title mb-20">Please sign in</h2>

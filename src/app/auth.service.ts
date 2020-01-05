@@ -13,7 +13,6 @@ export class AuthService {
 
   signIn(user: User) {
     this.user = user;
-    console.log(user);
   }
 
   signOut() {
