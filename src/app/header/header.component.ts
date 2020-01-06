@@ -9,8 +9,6 @@ import {HeaderService} from '../header.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  // @Input() settings;
-  // @Output() onAdd = new EventEmitter();
   settings = {
     isExit: false,
     isAdmin: false,
@@ -18,22 +16,16 @@ export class HeaderComponent implements OnInit {
     isSignInLink: false
   };
 
-  // isShowModal = false;
-
   constructor(private route: ActivatedRoute,
               private auth: AuthService,
               private share: HeaderService) {
   }
 
   ngOnInit() {
-    // console.log(this.settings);
-    // this.setup();
     this.setup();
   }
 
   setup() {
-    // console.log(this.route.snapshot.url[0].path);
-
     switch (this.route.snapshot.url[0].path) {
       case 'signup':
         this.settings.isSignInLink = true;

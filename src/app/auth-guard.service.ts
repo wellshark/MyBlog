@@ -10,7 +10,7 @@ export class AuthGuardService {
   constructor(public auth: AuthService, private router: Router) {
   }
 
-  canActivate() {
-    return !(Object.keys(this.auth.user).length === 0);
+  canActivate(): boolean {
+    return Boolean(this.auth.user.id);
   }
 }

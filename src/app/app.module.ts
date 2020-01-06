@@ -17,6 +17,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import {AuthGuardService} from './auth-guard.service';
 import {HeaderService} from './header.service';
+import {ModalInputsService} from './modal-inputs.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import {HeaderService} from './header.service';
   providers: [
     AngularFirestore,
     AuthGuardService,
-    HeaderService
+    HeaderService,
+    ModalInputsService
   ],
   bootstrap: [AppComponent]
 })

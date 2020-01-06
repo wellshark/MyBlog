@@ -1,19 +1,16 @@
-<div class="modal" *ngIf="isModalShow" >
-  <div class="modal__cover" (click)="onClose.emit()"></div>
+<div class="modal" *ngIf="isModalVisible && modalTitle" >
+  <div class="modal__cover" (click)="share.doToggleVisibility()"></div>
   <div class="modal__content position-center" >
-    <button class="modal__close button-close modal__button-close" (click)="onClose.emit()">
+    <button class="modal__close button-close modal__button-close" (click)="share.doToggleVisibility()">
       <span class="close-icon"></span>
     </button>
-    <h2 class="modal__title">Создать пост</h2>
+    <h2 class="modal__title">{{modalTitle}}</h2>
     <div class="form modal__form">
-      <textarea class="textarea mb-20" name="title" cols="10" rows="2" placeholder="Заглавие"
+      <textarea class="textarea mb-20" name="title" cols="10" rows="2" placeholder="Title"
                 [(ngModel)]="title"></textarea>
-      <textarea class="textarea mb-20" name="description" cols="30" rows="5" placeholder="Содержание"
+      <textarea class="textarea mb-20" name="description" cols="30" rows="5" placeholder="Description"
                 [(ngModel)]="description"></textarea>
-      <button class="button-lg button_blue modal__save"
-              (click)="emmitValue(); onClose.emit()"
-      >Сохранить
-      </button>
+      <button class="button-lg button_blue modal__save" (click)="share.doSave(title, description)">{{modalButtonText}}</button>
     </div>
   </div>
 </div>

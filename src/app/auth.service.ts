@@ -6,16 +6,21 @@ import {User} from './user.model';
 })
 export class AuthService {
 
-  user = {isAdmin: true};
+  user = {
+    isAdmin: false,
+    id: ''
+  };
 
   constructor() {
+    this.user.id = '';
   }
 
   signIn(user: User) {
-    this.user = user;
+    this.user.id = user.id;
+    this.user.isAdmin = user.isAdmin;
   }
 
   signOut() {
-    // this.user = {};
+    this.user.id = '';
   }
 }

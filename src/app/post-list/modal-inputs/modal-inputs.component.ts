@@ -1,4 +1,6 @@
-import {Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ModalInputsService} from '../../modal-inputs.service';
+import {Subscription} from 'rxjs';
 
 
 @Component({
@@ -6,35 +8,38 @@ import {Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChild}
   templateUrl: './modal-inputs.component.html',
   styleUrls: ['./modal-inputs.component.scss']
 })
-export class ModalInputsComponent implements OnInit {
-  @Input() title;
-  @Input() description;
-  @Input() isModalShow;
-  @Output() onSave: EventEmitter<object> = new EventEmitter<object>();
-  @Output() onClose = new EventEmitter();
-  isEraseInputs = true;
+export class ModalInputsComponent implements OnInit, OnDestroy {
+  modalTitle;
+  modalButtonText;
+  title;
+  description;
+  isModalVisible = false;
+  private subscriptionOnCreate: Subscription;
+  private subscriptionOnToggleVisibility: Subscription;
+  private subscriptionOnEraseInputs: Subscription;
 
-  constructor() {
+  constructor(private share: ModalInputsService) {
+    this.subscriptionOnCreate = this.share.onCreate.subscribe(settings => {
+      this.title = settings.title;
+      this.description = settings.description;
+      this.modalTitle = settings.modalTitle;
+      this.modalButtonText = settings.modalButtonText;
+    });
+    this.subscriptionOnToggleVisibility = this.share.onToggleVisibility.subscribe(() => {
+      this.isModalVisible = !this.isModalVisible;
+    });
+    this.subscriptionOnEraseInputs = this.share.onEraseInputs.subscribe(() => {
+      this.title = '';
+      this.description = '';
+    });
   }
 
   ngOnInit() {
-    if (this.title && this.description) {
-      this.isEraseInputs = false;
-    }
   }
 
-  emmitValue() {
-    if (this.title && this.description) {
-      this.onSave.emit({
-        title: this.title,
-        description: this.description
-      });
-      if (this.isEraseInputs) {
-        this.title = '';
-        this.description = '';
-      }
-
-    }
-
+  ngOnDestroy() {
+    this.subscriptionOnCreate.unsubscribe();
+    this.subscriptionOnToggleVisibility.unsubscribe();
+    this.subscriptionOnEraseInputs.unsubscribe();
   }
 }

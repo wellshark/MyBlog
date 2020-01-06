@@ -5,14 +5,13 @@
     <h3 class="post__title">{{post.title}}</h3>
     <p class="post__description">{{post.description}}</p>
     <div class="post__control-buttons">
-      <img class="mr-5" src="../../../assets/img/edit.png" alt="update" (click)="isModalShow = !isModalShow" *ngIf="auth.user.isAdmin">
+      <img class="mr-5" src="../../../assets/img/edit.png" alt="update" (click)="this.modalInputsService.doToggleVisibility()" *ngIf="auth.user.isAdmin">
     </div>
   </div>
 </main>
-<app-modal-inputs *ngIf="post"
-                  [title]= post.title
-                  [description]=post.description
-                  [isModalShow]=isModalShow
-                  (onSave)="update($event);"
-                  (onClose)="isModalShow = !isModalShow"
-></app-modal-inputs>
+<app-modal-inputs></app-modal-inputs>
+<!--[title]= post.title-->
+<!--[description]=post.description-->
+<!--[isModalShow]=isModalShow-->
+<!--(onSave)="update($event);"-->
+<!--(onClose)="isModalShow = !isModalShow"-->
