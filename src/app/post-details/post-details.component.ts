@@ -1,17 +1,18 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {PostService} from '../../post.service';
-import {Post} from '../../post.model';
-import {AuthService} from '../../auth.service';
-import {ModalInputsService} from '../../modal-inputs.service';
+import {PostService} from '../post.service';
+import {Post} from '../post.model';
+import {AuthService} from '../auth.service';
+import {ModalInputsService} from '../modal-inputs.service';
 import {Subscription} from 'rxjs';
+import {HeaderService} from '../header.service';
 
 @Component({
   selector: 'app-post-detail',
-  templateUrl: './post-detail.component.html',
-  styleUrls: ['./post-detail.component.scss']
+  templateUrl: './post-details.component.html',
+  styleUrls: ['./post-details.component.scss']
 })
-export class PostDetailComponent implements OnInit, OnDestroy {
+export class PostDetailsComponent implements OnInit, OnDestroy {
 
   post;
   private subscription: Subscription;
@@ -20,14 +21,15 @@ export class PostDetailComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private postService: PostService,
     private auth: AuthService,
-    private modalInputsService: ModalInputsService
+    private modalInputsService: ModalInputsService,
+    private headerService: HeaderService
   ) {
   }
 
   ngOnInit() {
     this.getPost();
     this.subscription = this.modalInputsService.onSave.subscribe(data => this.update(data));
-
+    this.headerService.settings.isExit = true;
   }
 
   getPost(): void {
@@ -53,5 +55,6 @@ export class PostDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.headerService.settings.isExit = false;
   }
 }

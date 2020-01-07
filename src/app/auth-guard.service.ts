@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
 import {AuthService} from './auth.service';
 
 @Injectable({
@@ -10,7 +10,11 @@ export class AuthGuardService {
   constructor(public auth: AuthService, private router: Router) {
   }
 
-  canActivate(): boolean {
-    return Boolean(this.auth.user.id);
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    if (this.auth.user.id) {
+      return true;
+    } else {
+      return this.router.parseUrl('/signin');
+    }
   }
 }

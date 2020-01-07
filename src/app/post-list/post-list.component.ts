@@ -4,7 +4,7 @@ import {PostService} from '../post.service';
 import Utils from '../utils';
 import {ActivatedRoute} from '@angular/router';
 import {AuthService} from '../auth.service';
-import {ModalInputsComponent} from './modal-inputs/modal-inputs.component';
+import {ModalInputsComponent} from '../modal-inputs/modal-inputs.component';
 import {HeaderService} from '../header.service';
 import {ModalInputsService} from '../modal-inputs.service';
 import {Subscription} from 'rxjs';
@@ -22,11 +22,13 @@ export class PostListComponent implements OnInit, OnDestroy {
   constructor(private postService: PostService,
               private auth: AuthService,
               private headerService: HeaderService,
-              private modalInputsService: ModalInputsService
+              private modalInputsService: ModalInputsService,
   ) {
   }
 
   ngOnInit() {
+    this.headerService.settings.isExit = true;
+    this.headerService.settings.isAdmin = this.auth.user.isAdmin;
     this.postService.getPosts().subscribe(
       date => {
         this.posts = date.map(e => {
@@ -71,6 +73,8 @@ export class PostListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptionOnClick.unsubscribe();
     this.subscriptionOnSave.unsubscribe();
+    this.headerService.settings.isExit = false;
+    this.headerService.settings.isAdmin = false;
   }
 
 }

@@ -1,25 +1,20 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import {PostListComponent} from './post-list/post-list.component';
-import {PostDetailComponent} from './post-list/post-detail/post-detail.component';
-import {SignInComponent} from './sign-in/sign-in.component';
-import {SignUpComponent} from './sign-up/sign-up.component';
-import {NotFoundComponent} from './not-found/not-found.component';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 import {AuthGuardService} from './auth-guard.service';
 
 
 const routes: Routes = [
   {path: '', redirectTo: '/signin', pathMatch: 'full'},
-  {path: 'posts', component: PostListComponent, canActivate: [AuthGuardService]},
-  {path: 'detail/:id', component: PostDetailComponent, canActivate: [AuthGuardService]},
-  {path: 'signin', component: SignInComponent},
-  {path: 'signup', component: SignUpComponent},
-  {path: '**', component: NotFoundComponent},
-
+  {path: 'posts', loadChildren: './post-list/post-list.module#PostListModule', canActivate: [AuthGuardService]},
+  {path: 'detail/:id', loadChildren: './post-details/post-details.module#PostDetailsModule', canActivate: [AuthGuardService]},
+  {path: 'signin', loadChildren: './sign-in/sign-in.module#SignInModule'},
+  {path: 'signup', loadChildren: './sign-up/sign-up.module#SignUpModule'},
+  {path: '**', loadChildren: './page-not-found/page-not-found.module#PageNotFoundModule'},
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

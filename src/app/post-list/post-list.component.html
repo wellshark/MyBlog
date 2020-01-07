@@ -1,5 +1,3 @@
-<app-header></app-header>
-
 <main class="posts">
   <div class="post" *ngFor="let post of posts" routerLink="/detail/{{post.id}}">
     <h3 class="post__title">{{post.title}}</h3>
@@ -9,4 +7,5 @@
     </div>
   </div>
 </main>
-<app-modal-inputs></app-modal-inputs>
+<!--<app-modal-inputs></app-modal-inputs>-->
+<router-outlet></router-outlet>

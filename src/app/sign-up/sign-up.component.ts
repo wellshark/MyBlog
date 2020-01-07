@@ -1,15 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from '../user.service';
 import Utils from '../utils';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
+import {HeaderService} from '../header.service';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   passwordContainer: FormGroup;
@@ -17,11 +18,12 @@ export class SignUpComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
+    private headerService: HeaderService
   ) {
+    this.headerService.settings.isSignInLink = true;
   }
 
   ngOnInit() {
-    // this.nameControl = new FormControl();
     this.form = new FormGroup({
       name: new FormControl('', [Validators.minLength(2), Validators.required]),
       surname: new FormControl('', [Validators.minLength(2), Validators.required]),
@@ -52,15 +54,8 @@ export class SignUpComponent implements OnInit {
     const confirmPass = group.get('confirmPass').value;
     return pass === confirmPass ? null : {notSame: true};
   }
-
-  // create(userData): void {
-  //   this.userService.createPost({
-  //     id: Utils.getUniqueId(),
-  //     name: userData.name,
-  //     surname: userData.surname,
-  //     password: userData.password,
-  //     isAdmin: userData.isAdmin,
-  //   });
-  // }
+  ngOnDestroy(): void {
+    this.headerService.settings.isSignInLink = false
+  }
 }
 

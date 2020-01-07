@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ModalInputsService} from '../../modal-inputs.service';
+import {ModalInputsService} from '../modal-inputs.service';
 import {Subscription} from 'rxjs';
 
 

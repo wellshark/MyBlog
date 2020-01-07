@@ -9,37 +9,38 @@ import {HeaderService} from '../header.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  settings = {
-    isExit: false,
-    isAdmin: false,
-    isSignUpLink: false,
-    isSignInLink: false
-  };
+  // settings = {
+  //   isExit: false,
+  //   isAdmin: true,
+  //   isSignUpLink: false,
+  //   isSignInLink: false
+  // };
+  settings;
 
-  constructor(private route: ActivatedRoute,
+  constructor(
               private auth: AuthService,
               private share: HeaderService) {
   }
 
   ngOnInit() {
-    this.setup();
+    this.settings = this.share.settings;
   }
 
-  setup() {
-    switch (this.route.snapshot.url[0].path) {
-      case 'signup':
-        this.settings.isSignInLink = true;
-        break;
-      case 'signin':
-        this.settings.isSignUpLink = true;
-        break;
-      case 'posts':
-        this.settings.isAdmin = this.auth.user.isAdmin;
-        this.settings.isExit = true;
-        break;
-      case 'detail':
-        this.settings.isExit = true;
-        break;
-    }
-  }
+  // setup() {
+  //   switch (this.route.snapshot.url[0].path) {
+  //     case 'signup':
+  //       this.settings.isSignInLink = true;
+  //       break;
+  //     case 'signin':
+  //       this.settings.isSignUpLink = true;
+  //       break;
+  //     case 'posts':
+  //       this.settings.isAdmin = this.auth.user.isAdmin;
+  //       this.settings.isExit = true;
+  //       break;
+  //     case 'detail':
+  //       this.settings.isExit = true;
+  //       break;
+  //   }
+  // }
 }

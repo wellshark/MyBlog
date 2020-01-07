@@ -1,16 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../user.service';
 import {Router} from '@angular/router';
 import {Post} from '../post.model';
 import {AuthService} from '../auth.service';
+import {HeaderService} from '../header.service';
 
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.scss']
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent implements OnInit, OnDestroy {
   form: FormGroup;
   users;
   isWrongFormData = false;
@@ -18,8 +19,10 @@ export class SignInComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    private headerService: HeaderService
   ) {
+    this.headerService.settings.isSignUpLink = true;
   }
 
   ngOnInit() {
@@ -54,6 +57,10 @@ export class SignInComponent implements OnInit {
 
   showDataError(): void {
     this.isWrongFormData = !this.isWrongFormData;
-    setInterval(() => this.isWrongFormData = !this.isWrongFormData, 5000);
+    setTimeout(() => this.isWrongFormData = !this.isWrongFormData, 5000);
+  }
+
+  ngOnDestroy(): void {
+    this.headerService.settings.isSignUpLink = false;
   }
 }

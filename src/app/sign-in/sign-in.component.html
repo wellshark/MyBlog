@@ -1,4 +1,3 @@
-<app-header></app-header>
 <div class="error-messages" *ngIf="form.get('email').invalid && form.get('email').touched
 ||form.get('password').invalid && form.get('password').touched || isWrongFormData">
   <p *ngIf="form.get('email').touched && form.get('email').invalid && form.get('email').errors.required">Email is not be empty!</p>
