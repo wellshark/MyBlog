@@ -1,15 +1,11 @@
 import {EventEmitter, Injectable} from '@angular/core';
+import {ModalSettings} from './modal-settings.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModalInputsService {
-  settings = {
-    title: '',
-    description: '',
-    modalTitle: '',
-    modalButtonText: ''
-  };
+  settings: ModalSettings;
   onCreate: EventEmitter<object> = new EventEmitter();
   onSave: EventEmitter<object> = new EventEmitter();
   onToggleVisibility = new EventEmitter();
@@ -19,10 +15,12 @@ export class ModalInputsService {
   }
 
   doCreate(modalTitle, modalButtonText, title, description): void {
-    this.settings.modalTitle = modalTitle;
-    this.settings.modalButtonText = modalButtonText;
-    this.settings.title = title;
-    this.settings.description = description;
+    this.settings = {
+      title,
+      description,
+      modalTitle,
+      modalButtonText
+    };
     this.onCreate.emit(this.settings);
   }
 

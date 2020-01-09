@@ -13,9 +13,9 @@ import {HeaderService} from '../header.service';
   styleUrls: ['./post-details.component.scss']
 })
 export class PostDetailsComponent implements OnInit, OnDestroy {
-
-  post;
+  post: Post;
   private subscription: Subscription;
+  private subscriptionPost: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,20 +27,22 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getPost();
+    this.getPost(this.initModal);
     this.subscription = this.modalInputsService.onSave.subscribe(data => this.update(data));
     this.headerService.settings.isExit = true;
   }
 
-  getPost(): void {
+  getPost(callback): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.postService.getPost(id).subscribe(post => {
-      this.post = {
-        id: post.payload.id,
-        ...post.payload.data()
-      } as Post;
-      this.modalInputsService.doCreate('Edit post', 'Save changes', this.post.title, this.post.description);
+    this.subscriptionPost = this.postService.getPost(id).subscribe(post => {
+      this.post = post.payload.data() as Post;
+      callback.call(this);
     });
+
+  }
+
+  initModal(): void {
+    this.modalInputsService.doCreate('Edit post', 'Save changes', this.post.title, this.post.description);
   }
 
   update(postFields) {
@@ -56,5 +58,6 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
     this.headerService.settings.isExit = false;
+    this.subscriptionPost.unsubscribe();
   }
 }

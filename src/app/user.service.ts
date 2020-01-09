@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {Post} from './post.model';
 import {User} from './user.model';
 
 @Injectable({

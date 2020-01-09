@@ -2,11 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {PostListComponent} from './post-list.component';
 import {PostListRoutingModule} from './post-list-routing.module';
-import {ModalInputsComponent} from '../modal-inputs/modal-inputs.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AngularFireModule} from '@angular/fire';
-import {environment} from '../../environments/environment';
-import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {ModalInputsModule} from '../modal-inputs/modal-inputs.module';
 
 

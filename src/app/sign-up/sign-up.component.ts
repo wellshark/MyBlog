@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from '../user.service';
 import Utils from '../utils';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {HeaderService} from '../header.service';
 
 @Component({
@@ -24,6 +24,10 @@ export class SignUpComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.formGroupsSettings();
+  }
+
+  formGroupsSettings(): void {
     this.form = new FormGroup({
       name: new FormControl('', [Validators.minLength(2), Validators.required]),
       surname: new FormControl('', [Validators.minLength(2), Validators.required]),
@@ -49,13 +53,14 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.router.navigate(['/signin']);
   }
 
-  checkPasswords(group: FormGroup) { // here we have the 'passwords' group
+  checkPasswords(group: FormGroup) {
     const pass = group.get('password').value;
     const confirmPass = group.get('confirmPass').value;
     return pass === confirmPass ? null : {notSame: true};
   }
+
   ngOnDestroy(): void {
-    this.headerService.settings.isSignInLink = false
+    this.headerService.settings.isSignInLink = false;
   }
 }
 

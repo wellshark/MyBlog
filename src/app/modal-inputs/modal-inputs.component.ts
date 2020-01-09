@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ModalInputsService} from '../modal-inputs.service';
 import {Subscription} from 'rxjs';
+import {ModalSettings} from '../modal-settings.model';
 
 
 @Component({
@@ -9,32 +10,38 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./modal-inputs.component.scss']
 })
 export class ModalInputsComponent implements OnInit, OnDestroy {
-  modalTitle;
-  modalButtonText;
-  title;
-  description;
+  settings: ModalSettings;
   isModalVisible = false;
   private subscriptionOnCreate: Subscription;
   private subscriptionOnToggleVisibility: Subscription;
   private subscriptionOnEraseInputs: Subscription;
 
   constructor(private share: ModalInputsService) {
+    this.modalSubscribeEvents();
+  }
+
+  ngOnInit() {
+  }
+
+  modalSubscribeEvents(): void {
     this.subscriptionOnCreate = this.share.onCreate.subscribe(settings => {
-      this.title = settings.title;
-      this.description = settings.description;
-      this.modalTitle = settings.modalTitle;
-      this.modalButtonText = settings.modalButtonText;
+      this.settings = settings;
     });
     this.subscriptionOnToggleVisibility = this.share.onToggleVisibility.subscribe(() => {
       this.isModalVisible = !this.isModalVisible;
     });
     this.subscriptionOnEraseInputs = this.share.onEraseInputs.subscribe(() => {
-      this.title = '';
-      this.description = '';
+      this.settings.title = this.settings.description = '';
     });
   }
 
-  ngOnInit() {
+
+  saveValues() {
+    this.share.doSave(this.settings.title, this.settings.description);
+  }
+
+  toggleVisibility() {
+    this.share.doToggleVisibility();
   }
 
   ngOnDestroy() {

@@ -2,9 +2,10 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../user.service';
 import {Router} from '@angular/router';
-import {Post} from '../post.model';
 import {AuthService} from '../auth.service';
 import {HeaderService} from '../header.service';
+import {User} from '../user.model';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-sign-in',
@@ -13,8 +14,9 @@ import {HeaderService} from '../header.service';
 })
 export class SignInComponent implements OnInit, OnDestroy {
   form: FormGroup;
-  users;
-  isWrongFormData = false;
+  users: User[];
+  isShowSignInError = false;
+  private subscriptionGetUsers: Subscription;
 
   constructor(
     private userService: UserService,
@@ -22,21 +24,30 @@ export class SignInComponent implements OnInit, OnDestroy {
     private auth: AuthService,
     private headerService: HeaderService
   ) {
-    this.headerService.settings.isSignUpLink = true;
   }
 
   ngOnInit() {
+    this.headerInit();
+    this.formGroupSettings();
+    this.getUsers();
+  }
+
+  headerInit(): void {
+    this.headerService.settings.isSignUpLink = true;
+  }
+
+  formGroupSettings(): void {
     this.form = new FormGroup({
       email: new FormControl('', [Validators.email, Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)])
     });
-    this.users = this.userService.getUsers().subscribe(
+  }
+
+  getUsers(): void {
+    this.subscriptionGetUsers = this.userService.getUsers().subscribe(
       date => {
         this.users = date.map(e => {
-            return {
-              id: e.payload.doc.id,
-              ...e.payload.doc.data()
-            } as Post;
+            return e.payload.doc.data() as User;
           }
         );
       }
@@ -44,23 +55,29 @@ export class SignInComponent implements OnInit, OnDestroy {
   }
 
   check(): void {
-    this.users.map(user => {
-      if (user.email === this.form.value.email && user.password === this.form.value.password) {
-        this.auth.signIn(user);
-        this.router.navigate(['/posts']);
-        return;
-      }
+    const successUser = this.users.find(user => {
+      return user.email === this.form.value.email && user.password === this.form.value.password;
     });
-    this.form.controls.password.reset();
-    this.showDataError();
+    successUser ? this.signInSuccess(successUser) : this.signInError();
   }
 
-  showDataError(): void {
-    this.isWrongFormData = !this.isWrongFormData;
-    setTimeout(() => this.isWrongFormData = !this.isWrongFormData, 5000);
+  signInSuccess(user: User): void {
+    this.auth.signIn(user);
+    this.router.navigate(['/posts']);
+  }
+
+  signInError(): void {
+    this.showSignInError();
+    this.form.controls.password.reset();
+  }
+
+  showSignInError(): void {
+    this.isShowSignInError = !this.isShowSignInError;
+    setTimeout(() => this.isShowSignInError = !this.isShowSignInError, 5000);
   }
 
   ngOnDestroy(): void {
     this.headerService.settings.isSignUpLink = false;
+    this.subscriptionGetUsers.unsubscribe();
   }
 }

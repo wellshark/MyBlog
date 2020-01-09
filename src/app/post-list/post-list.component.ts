@@ -1,10 +1,8 @@
-import {Component, EventEmitter, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Post} from '../post.model';
 import {PostService} from '../post.service';
 import Utils from '../utils';
-import {ActivatedRoute} from '@angular/router';
 import {AuthService} from '../auth.service';
-import {ModalInputsComponent} from '../modal-inputs/modal-inputs.component';
 import {HeaderService} from '../header.service';
 import {ModalInputsService} from '../modal-inputs.service';
 import {Subscription} from 'rxjs';
@@ -18,6 +16,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   posts: Post[];
   private subscriptionOnClick: Subscription;
   private subscriptionOnSave: Subscription;
+  private subscriptionGetPosts: Subscription;
 
   constructor(private postService: PostService,
               private auth: AuthService,
@@ -27,31 +26,40 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.modalInit();
+    this.getPosts();
+    this.headerInit();
+  }
+
+  headerInit(): void {
     this.headerService.settings.isExit = true;
     this.headerService.settings.isAdmin = this.auth.user.isAdmin;
-    this.postService.getPosts().subscribe(
-      date => {
-        this.posts = date.map(e => {
-            return {
-              id: e.payload.doc.id,
-              ...e.payload.doc.data()
-            } as Post;
-          }
-        );
-      }
-    );
     this.subscriptionOnClick = this.headerService.onClick.subscribe(() => {
       this.modalInputsService.onToggleVisibility.emit();
     });
-    this.subscriptionOnSave = this.modalInputsService.onSave.subscribe(data => {
-      this.create(data);
-      this.modalInputsService.doEraseInputs();
-    });
-    this.modalInit();
   }
 
   modalInit() {
     this.modalInputsService.doCreate('Create post', 'Save', '', '');
+    this.subscriptionOnSave = this.modalInputsService.onSave.subscribe(data => {
+      this.saveModalData(data);
+    });
+  }
+
+  getPosts(): void {
+    this.subscriptionGetPosts = this.postService.getPosts().subscribe(
+      date => {
+        this.posts = date.map(e => {
+            return e.payload.doc.data() as Post;
+          }
+        );
+      }
+    );
+  }
+
+  saveModalData(data): void {
+    this.create(data);
+    this.modalInputsService.doEraseInputs();
   }
 
   create(postFields): void {
@@ -73,6 +81,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptionOnClick.unsubscribe();
     this.subscriptionOnSave.unsubscribe();
+    this.subscriptionGetPosts.unsubscribe();
     this.headerService.settings.isExit = false;
     this.headerService.settings.isAdmin = false;
   }
