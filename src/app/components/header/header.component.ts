@@ -19,4 +19,11 @@ export class HeaderComponent implements OnInit {
     this.settings = this.share.settings;
   }
 
+  openModal() {
+    this.share.doClick();
+  }
+
+  signOut() {
+    this.auth.signOut();
+  }
 }

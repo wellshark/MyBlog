@@ -3,7 +3,7 @@
     <h3 class="post__title">{{post.title}}</h3>
     <p class="post__description">{{post.description}}</p>
     <div class="post__control-buttons">
-      <img src="../../../assets/img/delete.png" width="24" height="24" (click)="stopRouting($event); delete(post.id)" *ngIf="auth.user.isAdmin">
+      <img src="../../../assets/img/delete.png" width="24" height="24" (click)="stopRouting($event); delete(post.id)" *ngIf="isAdmin()">
     </div>
   </div>
 </main>

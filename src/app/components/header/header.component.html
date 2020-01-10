@@ -2,10 +2,10 @@
   <a class="logo" routerLink="/posts">My blog</a>
   <div class="header__buttons-wrap">
     <button *ngIf="settings.isAdmin" class="button-sm button_green header__show-modal"
-            (click)=share.doClick();>
+            (click)=openModal()>
       Добавить новость
     </button>
-    <button class="button-sm button_danger" *ngIf="settings.isExit"  routerLink="/signin" (click)="auth.signOut()">Выйти</button>
+    <button class="button-sm button_danger" *ngIf="settings.isExit"  routerLink="/signin" (click)="signOut()">Выйти</button>
     <button class="button-sm button_green" *ngIf="settings.isSignUpLink" routerLink="/signup">Sign Up</button>
     <button class="button-sm button_green" *ngIf="settings.isSignInLink" routerLink="/signin">Sign In</button>
   </div>

@@ -28,8 +28,7 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getPost(this.initModal);
-    this.subscription = this.modalInputsService.onSave.subscribe(data => this.update(data));
-    this.headerService.settings.isExit = true;
+    this.headerInit();
   }
 
   getPost(callback): void {
@@ -38,11 +37,19 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
       this.post = post.payload.data() as Post;
       callback.call(this);
     });
+  }
 
+  isAdmin(): boolean {
+    return this.auth.user.isAdmin;
+  }
+
+  headerInit() {
+    this.headerService.settings.isExit = true;
   }
 
   initModal(): void {
     this.modalInputsService.doCreate('Edit post', 'Save changes', this.post.title, this.post.description);
+    this.subscription = this.modalInputsService.onSave.subscribe(data => this.update(data));
   }
 
   update(postFields) {
@@ -53,6 +60,10 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
         description: postFields.description
       }
     );
+  }
+
+  showModal() {
+    this.modalInputsService.doToggleVisibility();
   }
 
   ngOnDestroy() {

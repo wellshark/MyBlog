@@ -12,14 +12,12 @@ export class AuthService {
   };
 
   constructor() {
-    this.user.id = 'asda';
-    this.user.isAdmin = true;
-
+    this.user.id = '';
   }
 
   signIn(user: User) {
     this.user.id = user.id;
-    // this.user.isAdmin = user.isAdmin;
+    this.user.isAdmin = user.isAdmin;
   }
 
   signOut() {

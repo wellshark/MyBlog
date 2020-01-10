@@ -57,6 +57,10 @@ export class PostListComponent implements OnInit, OnDestroy {
     );
   }
 
+  isAdmin(): boolean {
+    return this.auth.user.isAdmin;
+  }
+
   saveModalData(data): void {
     this.create(data);
     this.modalInputsService.doEraseInputs();
