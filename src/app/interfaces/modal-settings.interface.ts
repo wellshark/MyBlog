@@ -1,4 +1,4 @@
-export class ModalSettings {
+export interface ModalSettings {
   title: string;
   description: string;
   modalTitle: string;

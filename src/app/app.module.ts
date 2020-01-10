@@ -5,8 +5,8 @@ import {AppComponent} from './app.component';
 import {environment} from '../environments/environment';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {HeaderComponent} from './header/header.component';
-import {AuthGuardService} from './auth-guard.service';
+import {HeaderComponent} from './components/header/header.component';
+import {AuthGuardService} from './services/auth-guard.service';
 import {AngularFireModule} from '@angular/fire';
 
 @NgModule({

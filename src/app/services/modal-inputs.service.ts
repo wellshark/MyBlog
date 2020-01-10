@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {ModalSettings} from './modal-settings.model';
+import {ModalSettings} from '../interfaces/modal-settings.interface';
 
 @Injectable({
   providedIn: 'root'

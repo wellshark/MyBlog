@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {User} from './user.model';
+import {User} from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +12,14 @@ export class AuthService {
   };
 
   constructor() {
-    this.user.id = '';
+    this.user.id = 'asda';
+    this.user.isAdmin = true;
+
   }
 
   signIn(user: User) {
     this.user.id = user.id;
-    this.user.isAdmin = user.isAdmin;
+    // this.user.isAdmin = user.isAdmin;
   }
 
   signOut() {

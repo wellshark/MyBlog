@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {UserService} from '../user.service';
+import {UserService} from '../../services/user.service';
 import {Router} from '@angular/router';
-import {AuthService} from '../auth.service';
-import {HeaderService} from '../header.service';
-import {User} from '../user.model';
+import {AuthService} from '../../services/auth.service';
+import {HeaderService} from '../../services/header.service';
+import {User} from '../../interfaces/user.interface';
 import {Subscription} from 'rxjs';
 
 @Component({

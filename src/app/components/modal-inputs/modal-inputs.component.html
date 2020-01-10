@@ -1,0 +1,16 @@
+<div class="modal" *ngIf="isModalVisible && settings">
+  <div class="modal__cover" (click)="toggleVisibility()"></div>
+  <div class="modal__content position-center">
+    <button class="modal__close button-close modal__button-close" (click)="toggleVisibility()">
+      <span class="close-icon"></span>
+    </button>
+    <h2 class="modal__title">{{settings.modalTitle}}</h2>
+    <form class="form modal__form" (ngSubmit)="saveValues()" [formGroup]="form">
+      <textarea class="textarea mb-20" [class.red-border]="form.get('title').touched && form.get('title').invalid" name="title" cols="10" rows="2" placeholder="Title"
+                formControlName="title"></textarea>
+      <textarea class="textarea mb-20" [class.red-border]="form.get('description').touched && form.get('description').invalid" name="description" cols="30" rows="5" placeholder="Description"
+                formControlName="description"></textarea>
+      <button class="button-lg button_blue modal__save">{{settings.modalButtonText}}</button>
+    </form>
+  </div>
+</div>

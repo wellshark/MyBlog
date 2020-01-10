@@ -1,7 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ModalInputsService} from '../modal-inputs.service';
+import {ModalInputsService} from '../../services/modal-inputs.service';
 import {Subscription} from 'rxjs';
-import {ModalSettings} from '../modal-settings.model';
+import {ModalSettings} from '../../interfaces/modal-settings.interface';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 
 @Component({
@@ -12,20 +13,34 @@ import {ModalSettings} from '../modal-settings.model';
 export class ModalInputsComponent implements OnInit, OnDestroy {
   settings: ModalSettings;
   isModalVisible = false;
+  form: FormGroup;
   private subscriptionOnCreate: Subscription;
   private subscriptionOnToggleVisibility: Subscription;
   private subscriptionOnEraseInputs: Subscription;
 
   constructor(private share: ModalInputsService) {
+    this.formGroupSettings();
     this.modalSubscribeEvents();
   }
 
   ngOnInit() {
   }
 
+  setFormData(): void {
+    this.form.patchValue({title: this.settings.title, description: this.settings.description});
+  }
+
+  formGroupSettings(): void {
+    this.form = new FormGroup({
+      title: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required])
+    });
+  }
+
   modalSubscribeEvents(): void {
     this.subscriptionOnCreate = this.share.onCreate.subscribe(settings => {
       this.settings = settings;
+      this.setFormData();
     });
     this.subscriptionOnToggleVisibility = this.share.onToggleVisibility.subscribe(() => {
       this.isModalVisible = !this.isModalVisible;
@@ -37,7 +52,9 @@ export class ModalInputsComponent implements OnInit, OnDestroy {
 
 
   saveValues() {
-    this.share.doSave(this.settings.title, this.settings.description);
+    if (this.form.valid) {
+      this.share.doSave(this.form.value.title, this.form.value.description);
+    }
   }
 
   toggleVisibility() {

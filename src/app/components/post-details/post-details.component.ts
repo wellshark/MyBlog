@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {PostService} from '../post.service';
-import {Post} from '../post.model';
-import {AuthService} from '../auth.service';
-import {ModalInputsService} from '../modal-inputs.service';
+import {PostService} from '../../services/post.service';
+import {Post} from '../../interfaces/post.interface';
+import {AuthService} from '../../services/auth.service';
+import {ModalInputsService} from '../../services/modal-inputs.service';
 import {Subscription} from 'rxjs';
-import {HeaderService} from '../header.service';
+import {HeaderService} from '../../services/header.service';
 
 @Component({
   selector: 'app-post-detail',

@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Post} from '../post.model';
-import {PostService} from '../post.service';
-import Utils from '../utils';
-import {AuthService} from '../auth.service';
-import {HeaderService} from '../header.service';
-import {ModalInputsService} from '../modal-inputs.service';
+import {Post} from '../../interfaces/post.interface';
+import {PostService} from '../../services/post.service';
+import Utils from '../../utils';
+import {AuthService} from '../../services/auth.service';
+import {HeaderService} from '../../services/header.service';
+import {ModalInputsService} from '../../services/modal-inputs.service';
 import {Subscription} from 'rxjs';
 
 @Component({
