@@ -4,7 +4,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {environment} from '../environments/environment';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
-import {AngularFirestore} from '@angular/fire/firestore';
+import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/firestore';
 import {HeaderComponent} from './components/header/header.component';
 import {AuthGuardService} from './services/auth-guard.service';
 import {AngularFireModule} from '@angular/fire';
@@ -19,9 +19,9 @@ import {AngularFireModule} from '@angular/fire';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
+    AngularFirestoreModule
   ],
   providers: [
-    AngularFirestore,
     AuthGuardService,
   ],
   bootstrap: [AppComponent]
